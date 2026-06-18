@@ -19,3 +19,17 @@ AI songwriting MCP for generating lyrics, song titles, poems, and Suno prompts.
 ## MCP Identifier
 
 SunoMakerReverse
+
+AI songwriting helper API for Suno creators.
+
+Features:
+- Songwriting rule lookup
+- Genre style search
+- Lyric database lookup
+- Song structure template generation
+
+Endpoints:
+/rules
+/lyrics
+/genre
+/song-format
