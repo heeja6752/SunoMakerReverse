@@ -1,6 +1,6 @@
 from pathlib import Path
 
-BASE_DIR = Path(**file**).parent
+BASE_DIR = Path(__file__).parent
 
 def load_file(filename):
 path = BASE_DIR / filename
