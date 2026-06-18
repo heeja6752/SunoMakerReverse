@@ -29,7 +29,7 @@ def root():
 
 @app.get("/rules")
 def rules():
-return {"rules": RULES[:3000]}
+    return {"rules": RULES[:3000]}
 
 @app.get("/lyrics")
 def lyrics():
