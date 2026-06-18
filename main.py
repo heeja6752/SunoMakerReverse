@@ -26,3 +26,30 @@ app = FastAPI()
 @app.get("/")
 def root():
     return {"status": "ok"}
+
+@app.get("/rules")
+def rules():
+return {"rules": RULES[:3000]}
+
+@app.get("/lyrics")
+def lyrics():
+return {"lyrics": LYRICS[:3000]}
+
+@app.get("/genre")
+def genre(keyword: str = ""):
+if not keyword:
+return {"message": "Please provide a keyword"}
+
+```
+results = []
+
+for line in GENRES.splitlines():
+    if keyword.lower() in line.lower():
+        results.append(line)
+
+return {
+    "keyword": keyword,
+    "results": results[:30]
+}
+```
+
