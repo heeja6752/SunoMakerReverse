@@ -1,6 +1,8 @@
 from pathlib import Path
+from fastapi import FastAPI
 
 BASE_DIR = Path(__file__).parent
+
 
 def load_file(filename):
     path = BASE_DIR / filename
@@ -9,6 +11,7 @@ def load_file(filename):
         return ""
 
     return path.read_text(encoding="utf-8")
+
 
 RULES = load_file("규칙.txt")
 GENRES = load_file("Ai노래연구.txt")
@@ -19,17 +22,18 @@ print("Rules:", len(RULES))
 print("Genres:", len(GENRES))
 print("Lyrics:", len(LYRICS))
 
-from fastapi import FastAPI
-
 app = FastAPI()
+
 
 @app.get("/")
 def root():
     return {"status": "ok"}
 
+
 @app.get("/rules")
 def rules():
     return {"rules": RULES[:3000]}
+
 
 @app.get("/lyrics")
 def lyrics():
@@ -51,6 +55,7 @@ def genre(keyword: str = ""):
         "keyword": keyword,
         "results": results[:30]
     }
+
 
 @app.get("/song-format")
 def song_format():
