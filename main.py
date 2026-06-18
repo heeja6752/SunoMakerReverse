@@ -18,3 +18,11 @@ print("SunoMakerReverse Started")
 print("Rules:", len(RULES))
 print("Genres:", len(GENRES))
 print("Lyrics:", len(LYRICS))
+
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def root():
+    return {"status": "ok"}
