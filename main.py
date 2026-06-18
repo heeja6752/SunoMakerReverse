@@ -52,3 +52,28 @@ def genre(keyword: str = ""):
         "results": results[:30]
     }
 
+@app.get("/song-format")
+def song_format():
+    return {
+        "format": """
+[Instrumental intro]
+
+[Verse 1]
+
+[Verse 2]
+
+[Chorus]
+
+[Instrumental]
+
+[Verse 3]
+
+[Chorus]
+
+[Bridge]
+
+[Chorus]
+
+[Outro]
+"""
+    }
