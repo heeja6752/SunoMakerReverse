@@ -1,7 +1,8 @@
 from pathlib import Path
-from mcp.server.fastmcp import FastMCP
+from fastapi import FastAPI
 
 BASE_DIR = Path(__file__).parent
+
 
 def load_file(filename):
     path = BASE_DIR / filename
@@ -16,25 +17,50 @@ RULES = load_file("규칙.txt")
 GENRES = load_file("Ai노래연구.txt")
 LYRICS = load_file("가사목록.txt")
 
-mcp = FastMCP("SunoMakerReverse")
+print("SunoMakerReverse Started")
+print("Rules:", len(RULES))
+print("Genres:", len(GENRES))
+print("Lyrics:", len(LYRICS))
+
+app = FastAPI()
 
 
-@mcp.tool()
-def showRules():
-    """Returns songwriting rules."""
-    return RULES[:3000]
+@app.get("/")
+def root():
+    return {"status": "ok"}
 
 
-@mcp.tool()
-def showLyrics():
-    """Returns lyric examples."""
-    return LYRICS[:3000]
+@app.get("/rules")
+def rules():
+    return {"rules": RULES[:3000]}
 
 
-@mcp.tool()
-def songFormat():
-    """Returns Suno song structure."""
-    return """
+@app.get("/lyrics")
+def lyrics():
+    return {"lyrics": LYRICS[:3000]}
+
+
+@app.get("/genre")
+def genre(keyword: str = ""):
+    if not keyword:
+        return {"message": "Please provide a keyword"}
+
+    results = []
+
+    for line in GENRES.splitlines():
+        if keyword.lower() in line.lower():
+            results.append(line)
+
+    return {
+        "keyword": keyword,
+        "results": results[:30]
+    }
+
+
+@app.get("/song-format")
+def song_format():
+    return {
+        "format": """
 [Instrumental intro]
 
 [Verse 1]
@@ -55,20 +81,4 @@ def songFormat():
 
 [Outro]
 """
-
-
-@mcp.tool()
-def searchGenre(keyword: str):
-    """Search genre style database."""
-
-    results = []
-
-    for line in GENRES.splitlines():
-        if keyword.lower() in line.lower():
-            results.append(line)
-
-    return "\n".join(results[:30])
-
-
-if __name__ == "__main__":
-    mcp.run(transport="streamable-http")
+    }
