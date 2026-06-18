@@ -33,3 +33,6 @@ Endpoints:
 /lyrics
 /genre
 /song-format
+
+Public Endpoint:
+https://sunomakerreverse-production.up.railway.app
